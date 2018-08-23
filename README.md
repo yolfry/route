@@ -15,8 +15,8 @@
 --model
 --controller
 index.php
-```
 .htaccess
+```
 ```php
    /*index.php*/
    <?php
