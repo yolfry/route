@@ -7,10 +7,16 @@
 [![Linux Build][travis-image]][travis-url]
 [![Windows Build][appveyor-image]][appveyor-url]
 
-## Installation
+## Instalación
 
 ```sh
-$ npm install -g express-generator
+ -- view
+ -- route
+      route.php
+      route.web.php
+ -- model
+ -- controller
+    index.php  /* require 'route/route.web.php'; */
 ```
 
 ## Quick Start
