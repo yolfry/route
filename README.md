@@ -46,7 +46,7 @@ NOTA: El archivo route.web.php, solo es un archivo de configuración y agregaci�
     $route = new route\route();
 ```
 
- Configurar route en el archivo, route.web.php:
+ Configurar route en el archivo:
 
 ```php
     /*route.web.php*/
@@ -66,7 +66,7 @@ NOTA: El archivo route.web.php, solo es un archivo de configuración y agregaci�
 ```
 
 
-Crear auto enrutador, route.web.php:
+Crear auto enrutador:
 
 ```php
     /*route.web.php*/
@@ -113,7 +113,7 @@ Crear auto enrutador, route.web.php:
 ```
 
 
-Crear enrutador estático, route.web.php:
+Crear enrutador estático:
 
 ```php
     /*route.web.php*/
@@ -144,7 +144,7 @@ Crear enrutador estático, route.web.php:
 ```
 
 
-Crear enrutador con datos, route.web.php:
+Crear enrutador con datos:
 
 ```php
     /*route.web.php*/
@@ -225,6 +225,10 @@ Crear pagina de error
     ?>
 }
 ```
+
+# YOLFRY BAUTISTA REYNOSO (C)2018
+# LICENCIA
+GPL V3
 
 
 [Route-image]: https://img.shields.io/badge/Route%20Vercion-1.0.0-04265e.svg
