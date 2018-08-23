@@ -1,11 +1,13 @@
-[![Express Logo](https://i.imgur.com/OCAbNWr.png)](http://expressjs.com/)
+[![Route Logo](http://i.imgur.com/mc0hrj6.png)](http://expressjs.com/)
 
 [Route](https://luballsoftware.com/Route) Control de ruta, para aplicaciones MVC (Modelo – Vista - Controlador).
 
+[![Route Version][Route-image]]
 [![PHP Version][php-image]][php-url]
 
-## Instalación
 
+## Instalación
+```bach
 --view
 --route
     route.php
@@ -13,6 +15,7 @@
 --model
 --controller
 index.php
+```
 .htaccess
 ```php
    /*index.php*/
@@ -224,28 +227,7 @@ Crear pagina de error
 ```
 
 
-
-
-## Command Line Options
-
-This generator can also be further configured with the following command line flags.
-
-        --version        output the version number
-    -e, --ejs            add ejs engine support
-        --pug            add pug engine support
-        --hbs            add handlebars engine support
-    -H, --hogan          add hogan.js engine support
-    -v, --view <engine>  add view <engine> support (dust|ejs|hbs|hjs|jade|pug|twig|vash) (defaults to jade)
-        --no-view        use static html instead of view engine
-    -c, --css <engine>   add stylesheet <engine> support (less|stylus|compass|sass) (defaults to plain css)
-        --git            add .gitignore
-    -f, --force          force on non-empty directory
-    -h, --help           output usage information
-
-## License
-
-[MIT](LICENSE)
-
-[php-image]: https://img.shields.io/badge/Php-7.1.X-8F9ED1.svg
+[Route-image]: https://img.shields.io/badge/Route%20Vercion-1.0.0-04265e.svg
+[php-image]: https://img.shields.io/badge/Php%20Versión-7.X-8F9ED1.svg
 [php-url]: http://php.net/archive/2018.php#id2018-08-17-1
 
