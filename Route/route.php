@@ -184,7 +184,9 @@ class route
         #Finalizar Class Route
         $this->validate_route = null;
         $this->url_server = null;
+        unset($this);
     }
+
 
 }
 
