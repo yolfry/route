@@ -1,6 +1,6 @@
-[![Route Logo](http://i.imgur.com/mc0hrj6.png)](http://expressjs.com/)
+[![Route Logo](http://i.imgur.com/mc0hrj6.png)](https://github.com/yolfry/route)
 
-[Route](https://luballsoftware.com/Route) Control de ruta, para aplicaciones MVC (Modelo – Vista - Controlador).
+[Route](https://github.com/yolfry/route) Control de ruta, para aplicaciones MVC (Modelo – Vista - Controlador).
 
 [![Route Version][Route-image]][Route-url]
 [![PHP Version][php-image]][php-url]
@@ -90,7 +90,7 @@ Crear auto enrutador:
 
        #NOTA: ¿Qué es .htaccess?
        /*Htaccess es la abreviatura de Hypertext Access. Se trata de un archivo de configuración utilizado por servidores web basados en apache. Este tipo de archivos configura los ajustes iniciales de un programa o, como ocurre en este caso, del servidor. Esto significa que se puede utilizar el archivo .htaccess para que el servidor se comporte de una determinada forma. */
-       
+
        #.htaccess
        #Configurar  .htaccess
        /*
@@ -139,7 +139,7 @@ Crear enrutador estático:
         $route->add_route();                         /*Crear y mostrar contenido de la ruta.*/
         $route->end_route();                         /*Finalizar enrutador*/
       }
- 
+
     ?>
 ```
 
@@ -179,12 +179,12 @@ Crear enrutador con datos:
           Para utilizar los datos en la página en rutada, en este caso pagina1.php que se encuentra en el directorio público "view",
           Utilizamos la variable array $_URL_GET[''], ej. <?php echo $_URL_GET['dato1'] .' '. $_URL_GET['dato2']; ?>.  Devuelve  profile yolfry.
      */
- 
+
     ?>
 ```
 
 Crear pagina de error
-```php 
+```php
     /*route.web.php*/
     <?php
 
@@ -203,14 +203,14 @@ Crear pagina de error
 
       /* Enrutador estático
       if ($route->route_exists("/pagina1/{dato1}/{dato2}")) {
-        $route->ext = ".php";                      
-        $route->add_route($route->URL_DATA);         
-        $route->end_route();                         
+        $route->ext = ".php";
+        $route->add_route($route->URL_DATA);
+        $route->end_route();
       }*/
 
 
 
-       /*Esta página de error 404 se muestra en caso de que no se encuentre la página solicitada por la url del cliente ej. www.miweb.com/pagina3 
+       /*Esta página de error 404 se muestra en caso de que no se encuentre la página solicitada por la url del cliente ej. www.miweb.com/pagina3
        Si la pagina3.html no se encuentra $route->active_route devuelve falso, el cual podemos aprovechar y establecer una condición e incluir una página de error como se muestra a continuación.
        */
       if ($route->active_route != true) {
@@ -221,7 +221,7 @@ Crear pagina de error
 
 
 
- 
+
     ?>
 }
 ```
