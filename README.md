@@ -226,9 +226,8 @@ Crear pagina de error
 }
 ```
 
-# YOLFRY BAUTISTA REYNOSO (C)2018
-# LICENCIA
-GPL V3
+YOLFRY BAUTISTA REYNOSO (C)2018
+LICENCIA GPL V3
 
 
 [Route-image]: https://img.shields.io/badge/Route%20Vercion-1.0.0-04265e.svg
