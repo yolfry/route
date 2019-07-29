@@ -1,4 +1,6 @@
-<?php namespace route;
+<?php
+
+namespace route;
 
 
 //Route (C)2018 Yolfry Bautista Reynsoso -> yolfri1997@hotmail.com
@@ -8,20 +10,20 @@ class route
     #Propiedades de las rutas
     public $validate_route; #propiedad que contiene la validación de la ruta
     public $url_server;     #propiedad que contiene la url del cliente servidor
-    public $URL_DATA;       #propiedad que contiene la url del data class
+    public $GET;       #propiedad que contiene la url del data class
     public $dir_default;    #propiedad que contiene el directorio vista publica
     public $home_default;   #propiedad que contiene el archivo home de la web
     public $ext;            #propiedad que contiene la extención del archivo home de la web
     public $active_route;   #propiedad que contiene la activación global de una ruta, el uso correcto es para mostrar  un error 404
+    public $var;            #propiedad que contiene las variables de entorno html definidas
 
 
 
     public function __construct()
     {
-        $this->dir_default = 'view_/';
+        $this->dir_default = 'views/';
         $this->home_default = 'home';
         $this->ext = ".html";
-
     }
 
     /*Validar ruta*/
@@ -64,46 +66,46 @@ class route
         #si se  encuentran indentificador de  datos, ejecutamos el script de captura de datos.
         if ($pos !== false) {
 
-                         #separamos las rutas locales
-                         $url_local = explode('/', $url); 
+            #separamos las rutas locales
+            $url_local = explode('/', $url);
 
-                         #separamos las rutas cliente servidor
-                         $url_server_se = explode('/', $this->url_server);
+            #separamos las rutas cliente servidor
+            $url_server_se = explode('/', $this->url_server);
 
-                         #creamos un array de datos
-                         $data = array();
+            #creamos un array de datos
+            $data = array();
 
-                         #for para validar y capturar datos mediante la URL data
+            #for para validar y capturar datos mediante la URL data
             for ($i = 1; $i < count($url_local); $i++) {
 
-                        #Box ruta, caracter {} de indentificador de datos por la ruta
-                         $box_string = '{';
+                #Box ruta, caracter {} de indentificador de datos por la ruta
+                $box_string = '{';
 
-                        #Buscar indentificador de datos por la ruta indicada por el separador
-                         $pos = strpos($url_local[$i], $box_string);
+                #Buscar indentificador de datos por la ruta indicada por el separador
+                $pos = strpos($url_local[$i], $box_string);
 
                 #validamos el encuentro de datos
                 if ($pos !== false && !empty($url_local[$i]) && !empty($url_server_se[$i])) {
 
-                         #Agregamos un array['name'] para los datos encontrado
-                         $name_item = str_replace('{', '', str_replace('}', '', str_replace('/', '', $url_local[$i])));
-                         #Capturamos los datos
-                         $data_item = str_replace('/', '', $url_server_se[$i]);
+                    #Agregamos un array['name'] para los datos encontrado
+                    $name_item = str_replace('{', '', str_replace('}', '', str_replace('/', '', $url_local[$i])));
+                    #Capturamos los datos
+                    $data_item = str_replace('/', '', $url_server_se[$i]);
 
 
-                         #Agregamos un Item de datos
-                         $data['' . $name_item] = $data_item;
+                    #Agregamos un Item de datos
+                    $data['' . $name_item] = $data_item;
 
-                         #Eliminamos la URL de datos y cargamos la nueva URL
-                         $this->url_server = str_replace('/' . $url_server_se[$i], '', $this->url_server);
+                    #Eliminamos la URL de datos y cargamos la nueva URL
+                    $this->url_server = str_replace('/' . $url_server_se[$i], '', $this->url_server);
 
-                         #Agregamos los datos a la propiedad  "data" de la clase de ruta
-                         $this->URL_DATA = $data;
+                    #Agregamos los datos a la propiedad  "data" de la clase de ruta
+                    $this->GET = $data;
                 }
             }
         }
         #Validamos la ruta del view o public
-        $this->url_server = str_replace('/','', $this->url_server);
+        $this->url_server = str_replace('/', '', $this->url_server);
         if (file_exists($this->dir_default . $this->url_server . '' . $this->ext)) {
             $this->validate_route = true;
             return true;
@@ -111,7 +113,7 @@ class route
             $this->validate_route = false;
             $this->validate_route = null;
             $this->url_server = null;
-            $this->URL_DATA = null;
+            $this->GET = null;
             return false;
         }
     }
@@ -148,22 +150,57 @@ class route
         );
         $data = str_replace(
             array('ñ', 'Ñ', 'ç', 'Ç'),
-            array('n', 'N', 'c', 'C', ),
+            array('n', 'N', 'c', 'C',),
             $data
         );
         return $data;
     }
-    public function add_route($_URL_GET="")
+    public function add_route($GET = "")
     {
         #Agregar Ruta
         if ($this->validate_route == true) {
-            if (include_once $this->dir_default . $this->url_server . '' . $this->ext) {
+
+
+            if (file_exists($this->dir_default . $this->url_server . '' . $this->ext)) {
+
+                /*Tomar el contenido de la plantilla html*/
+                $conteiner = file_get_contents($this->dir_default . $this->url_server . '' . $this->ext);
+
+                /*Recuperar Variables*/
+                $var = $this->var;
+
+                /*Evaluamos si hay variables de entorno creada $var[]*/
+                if ($var != null) {
+                    /*Montar esos datos como variable de entorno {GET} en html*/
+                    while ($data_name = current($var)) {
+                        $st = "{" . key($var) . "}";
+                        $conteiner = str_replace($st, $data_name, $conteiner);
+                        next($var);
+                    }
+                }
+
+
+                /*Recuperamos los datos GET*/
+                $data = $this->GET;
+
+                /*Evaluar si hay datos GET*/
+                if ($data != null) {
+                    /*Montar esos datos como variable de entorno {GET} en html*/
+                    while ($data_name = current($data)) {
+                        $st = "{" . key($data) . "}";
+                        $conteiner = str_replace($st, $data_name, $conteiner);
+                        next($data);
+                    }
+                }
+
+                echo $conteiner; /*Mostramos la plantilla*/
+
                 $this->active_route = true;
                 return true;
             } else {
                 $this->validate_route = null;
                 $this->url_server = null;
-                $this->URL_DATA = null;
+                $this->GET = null;
                 return false;
             }
         }
@@ -172,9 +209,32 @@ class route
     public function home($active = null)
     {
         if ($_SERVER["REQUEST_URI"] == '/') {
-            include_once $this->dir_default . $this->home_default . $this->ext; #Agregar el directorio por defecto
-            $this->active_route = true;
-            return true;
+            #Agregar el directorio por defecto
+
+            if (file_exists($this->dir_default . $this->home_default . $this->ext)) {
+                /*Tomar el contenido de la plantilla html*/
+                $conteiner = file_get_contents($this->dir_default . $this->home_default . $this->ext);
+
+                /*Recuperar Variables*/
+                $var = $this->var;
+
+                /*Evaluamos si hay variables de entorno creada $var[]*/
+                if ($var != null) {
+                    /*Montar esos datos como variable de entorno {GET} en html*/
+                    while ($data_name = current($var)) {
+                        $st = "{" . key($var) . "}";
+                        $conteiner = str_replace($st, $data_name, $conteiner);
+                        next($var);
+                    }
+                }
+
+                echo $conteiner; /*Mostramos la plantilla*/
+
+                $this->active_route = true;
+                return true;
+            }else{
+                echo " Error, the applied directory cannot be found.";
+            }
         } else {
             return false;
         }
@@ -185,9 +245,4 @@ class route
         $this->validate_route = null;
         $this->url_server = null;
     }
-
-
 }
-
-
-?>

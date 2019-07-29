@@ -8,10 +8,10 @@
 
 ## Instalación
 ```bach
---view
+--views
 --route
     route.php
-    route.web.php
+    route.api.php
 --model
 --controller
 index.php
@@ -20,7 +20,7 @@ index.php
 ```php
    /*index.php*/
    <?php
-      require 'route.web.php';
+      require 'route.api.php';
    ?>
 ```
 
@@ -29,10 +29,10 @@ index.php
 La forma más rápida de comenzar con Route es incluyendo la librería en el index de la aplicación mvc, como se muestra a continuación:
 
 Incluir la librería:
-NOTA: El archivo route.web.php, solo es un archivo de configuración y agregación de ruta, puedes cambiarle el nombre o modificarlo.
+NOTA: El archivo route.api.php, solo es un archivo de configuración y agregación de ruta, variable de entorno y funciones, puedes cambiarle el nombre o modificarlo.
 
 ```php
-   /*route.web.php*/
+   /*route.api.php*/
    <?php
       require 'route.php';
       use route as route;
@@ -49,13 +49,13 @@ NOTA: El archivo route.web.php, solo es un archivo de configuración y agregaci�
  Configurar route en el archivo:
 
 ```php
-    /*route.web.php*/
+    /*route.api.php*/
     <?php
       require 'route.php';
       use route as route;
       $route = new route\route();           /*instancia*/
-      $route->ext = ".php";                /*Tipo de extensión*/
-      $route->dir_default = "view_/";       /*Carpeta publica (Directorio público).*/
+      $route->ext = ".html";                /*Tipo de extensión*/
+      $route->dir_default = "views/";       /*Carpeta publica (Directorio público).*/
       $route->home_default = "home";        /*Index del directorio publico home, index etc.*/
 
       /*Activar enrutador home, iniciar el índex de la página (Directorio público).*/
@@ -64,6 +64,25 @@ NOTA: El archivo route.web.php, solo es un archivo de configuración y agregaci�
       }
     ?>
 ```
+
+
+ Crear varieble de entornos HTML {}
+
+ Las variables de entornos HTML {} se utilizan en caso de que se desea mandar datos desde el backEnd al FrontEnd, las variable se representan en el HTML con una llave abierta {mi_variable} y una llave de cierre, cuando el enrutador lea la plantilla HTML pondrá el valor de la variable automáticamente.
+
+ 
+ Las variables en el bachead se representan de la siguiente manera $var es la matriz de variables, ['RUTA'] es el nombre de la variable que se encuentra es una posición de la matriz y "https://localhost" es el valor de la variable.
+
+ La propiedad del objeto roete que se encarga de llevar esa variable al FrontEnd es $route->var, a var le pasaremos al matriz de variables.
+
+```php
+    /*route.api.php*/
+      $var['RUTA'] = "http://localhost";
+      $var['RUTA_'] = $var['RUTA'] . "/views";
+      $route->var = $var;
+    ?>
+```
+
 
 
 Crear auto enrutador:
@@ -95,12 +114,12 @@ Crear auto enrutador:
        #Configurar  .htaccess
        /*
           RewriteEngine On
-          RewriteRule ^([a-zA-Z0-9/_]+)$ index.php?view=$1
+          RewriteRule ^([a-zA-Z0-9/_]+)$ index.php?views=$1
        */
 
 
       /*Auto Route*/
-      $url = explode('/', (!empty($_GET['view']) ? $_GET['view'] : ''));  /*Esta variable "$url" contiene pagina1 de la url del cliente   URL -> www.miweb.com/pagina1. */
+      $url = explode('/', (!empty($_GET['views']) ? $_GET['views'] : ''));  /*Esta variable "$url" contiene pagina1 de la url del cliente   URL -> www.miweb.com/pagina1. */
 
 
       if ($route->route_exists("/" . str_replace('.html', '', str_replace('.php', '', str_replace('/', '', $url[0]))) )) { /*Mandamos la variable url a la librería route utilizando el método route_exists().*/
@@ -166,8 +185,8 @@ Crear enrutador con datos:
 
        #Enrutador estático
       if ($route->route_exists("/pagina1/{dato1}/{dato2}")) {
-        $route->ext = ".php";                       /*Cargamos el tipo de extensión, para completar pagina1.php */
-        $route->add_route($route->URL_DATA);         /*Crear y mostrar contenido de la ruta.*/
+        $route->ext = ".html";                       /*Cargamos el tipo de extensión, para completar pagina1.html */
+        $route->add_route($route->GET);              /*Crear y mostrar contenido de la ruta.*/
         $route->end_route();                         /*Finalizar enrutador*/
       }
 
@@ -175,9 +194,9 @@ Crear enrutador con datos:
           www.miweb.com/pagina1/profile/yolfry,
           Y se recogen por la configuración del enrutador de la siguiente manera:
           $route->route_exists("/pagina1/{dato1}/{dato2}");
-          Para mandar esos datos al contenido de la página web, tenemos que utilizar la propiedad $route->URL_DATA y pasarla por el método $route->add_route($route->URL_DATA).
-          Para utilizar los datos en la página en rutada, en este caso pagina1.php que se encuentra en el directorio público "view",
-          Utilizamos la variable array $_URL_GET[''], ej. <?php echo $_URL_GET['dato1'] .' '. $_URL_GET['dato2']; ?>.  Devuelve  profile yolfry.
+          Para mandar esos datos al contenido de la página web, tenemos que utilizar la propiedad $route->GET y pasarla por el método $route->add_route($route->GET).
+          Para utilizar los datos en la página en rutada, en este caso pagina1.html que se encuentra en el directorio público "views",
+          Utilizamos el código {mi_variable}, ej. si colocamos en el HTML que sera enrutado el siguiente código: {dato1} + {dato2}.  Devuelve  profile yolfry.
      */
 
     ?>
