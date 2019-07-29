@@ -16,6 +16,15 @@ $route->ext = ".html";
 $route->dir_default = "views/";
 $route->home_default = "home";
 
+/*
+---------------------------------
+Espesificar Pagina de error 404 de la siguiente manera
+---------------------------------
+*/
+$route->ERROR404 = "page-404.html";
+
+
+
 
 /*
 --------------------------------------
@@ -64,8 +73,20 @@ Pagina de error 404 no se encontro la página que busca.
 */
 
 if ($route->active_route != true) {
-    require_once 'views/404.html';
+    /*Mostrar página de error 404*/
+    $route->ERROR404();
 }
+
+
+/*
+-----------------------------------------------------------
+Carga directa.
+-----------------------------------------------------------
+*/
+
+#$route->load("views/login.html");
+
+
 
 
 

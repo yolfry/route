@@ -57,6 +57,7 @@ NOTA: El archivo route.api.php, solo es un archivo de configuración y agregaci�
       $route->ext = ".html";                /*Tipo de extensión*/
       $route->dir_default = "views/";       /*Carpeta publica (Directorio público).*/
       $route->home_default = "home";        /*Index del directorio publico home, index etc.*/
+      $route->ERROR404 = "page-404.html";   /*Página de error 404 por default*/
 
       /*Activar enrutador home, iniciar el índex de la página (Directorio público).*/
       if ($route->home()) {
@@ -202,6 +203,32 @@ Crear enrutador con datos:
     ?>
 ```
 
+Carga directas:
+
+Cuando se necesite cargar directamente un archivo o página HTML pero que contenga las variables de entorno
+Utilizamos el método load y pasándole el parámetro de la dirección del archivo, como se escribe a continuación.
+
+```php
+    /*route.web.php*/
+    <?php
+
+
+      /*
+      -----------------------------------------------------------
+      Carga directa.
+      -----------------------------------------------------------
+     */
+    $route->load("views/login.html");
+
+    ?>
+```
+
+
+
+
+
+
+
 Crear pagina de error
 ```php
     /*route.web.php*/
@@ -233,7 +260,8 @@ Crear pagina de error
        Si la pagina3.html no se encuentra $route->active_route devuelve falso, el cual podemos aprovechar y establecer una condición e incluir una página de error como se muestra a continuación.
        */
       if ($route->active_route != true) {
-         require_once 'view_/404.html';
+         /*Mostrar página de error 404*/
+         $route->ERROR404();
       }
 
       /*Esta condición siempre se coloca al final de la configuración del enrutador.*/

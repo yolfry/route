@@ -16,6 +16,9 @@ class route
     public $ext;            #propiedad que contiene la extención del archivo home de la web
     public $active_route;   #propiedad que contiene la activación global de una ruta, el uso correcto es para mostrar  un error 404
     public $var;            #propiedad que contiene las variables de entorno html definidas
+    public $ERROR404;       #propiedad que contiene la pagina error 404
+
+
 
 
 
@@ -232,13 +235,65 @@ class route
 
                 $this->active_route = true;
                 return true;
-            }else{
+            } else {
                 echo " Error, the applied directory cannot be found.";
             }
         } else {
             return false;
         }
     }
+
+    /*Modulo, Cargar ruta directa*/
+    public function load($file)
+    {
+        if (file_exists($file)) {
+            $conteiner = file_get_contents($file);
+
+            /*Recuperar Variables*/
+            $var = $this->var;
+
+            /*Evaluamos si hay variables de entorno creada $var[]*/
+            if ($var != null) {
+                /*Montar esos datos como variable de entorno {GET} en html*/
+                while ($data_name = current($var)) {
+                    $st = "{" . key($var) . "}";
+                    $conteiner = str_replace($st, $data_name, $conteiner);
+                    next($var);
+                }
+            }
+
+            echo $conteiner; /*Mostramos la plantilla*/
+        } else {
+            echo "Error, the applied directory cannot be found.";
+        }
+    }
+    /*Metodo de carga de pagina 404*/
+    public function ERROR404()
+    {
+        if (file_exists($this->dir_default . $this->ERROR404)) {
+            $conteiner = file_get_contents($this->dir_default . $this->ERROR404);
+
+            /*Recuperar Variables*/
+            $var = $this->var;
+
+            /*Evaluamos si hay variables de entorno creada $var[]*/
+            if ($var != null) {
+                /*Montar esos datos como variable de entorno {GET} en html*/
+                while ($data_name = current($var)) {
+                    $st = "{" . key($var) . "}";
+                    $conteiner = str_replace($st, $data_name, $conteiner);
+                    next($var);
+                }
+            }
+
+            echo $conteiner; /*Mostramos la plantilla*/
+            $this->active_route = false;
+        } else {
+            echo "Error, the applied directory cannot be found.";
+        }
+    }
+
+
     public function end_route()
     {
         #Finalizar Class Route

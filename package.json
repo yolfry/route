@@ -1,0 +1,22 @@
+{
+  "name": "route",
+  "version": "1.0.0",
+  "description": "Enrutador potente, con variables de entorno que le dan Super poderes a HTML con el BackEnd\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[Dcon PHP\u001b[2~   BackEnd",
+  "main": "index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yolfry/route.git"
+  },
+  "keywords": [
+    "route"
+  ],
+  "author": "Yolfry",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/yolfry/route/issues"
+  },
+  "homepage": "https://github.com/yolfry/route#readme"
+}
